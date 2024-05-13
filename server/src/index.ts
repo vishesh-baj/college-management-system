@@ -1,8 +1,11 @@
+import { createFaculty } from "./controllers/users";
 import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 
+import authRoutes from "./routes/auth";
+import userRoutes from "./routes/users";
 dotenv.config();
 
 const app = express();
@@ -26,3 +29,6 @@ mongoose
   .catch((error) => console.error("ERROR OCCURED: ", error));
 
 // routes
+
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
