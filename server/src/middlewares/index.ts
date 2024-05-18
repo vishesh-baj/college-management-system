@@ -30,3 +30,18 @@ export const verifyToken = (
     next();
   });
 };
+
+export const checkAdminPrivilages = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = req.user;
+  if (!user || !user.userId || !user.role) {
+    return res.status(404).json({ message: "Data not received from client" });
+  }
+  if (user.role !== "admin") {
+    return res.status(401).json({ messge: "Unauthorized access" });
+  }
+  next();
+};
