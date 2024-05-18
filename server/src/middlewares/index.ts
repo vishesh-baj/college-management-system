@@ -15,7 +15,6 @@ export const verifyToken = (
   next: NextFunction
 ) => {
   const token = req.headers.authorization;
-
   if (!token) {
     return res.status(401).json({ message: "No token provided" });
   }
@@ -25,7 +24,7 @@ export const verifyToken = (
 
   jwt.verify(token, process.env.JWT_SECRET, (err: any, decoded: any) => {
     if (err) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized", err });
     }
     req.user = decoded;
     next();

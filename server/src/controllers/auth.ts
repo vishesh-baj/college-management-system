@@ -24,9 +24,13 @@ export const login = async (req: Request, res: Response) => {
         .status(500)
         .json({ message: "Internal Server Error: JWT Secret not found" });
     }
-    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { userId: user._id.toString(), role: user.role },
+      JWT_SECRET,
+      {
+        expiresIn: "24h",
+      }
+    );
     res.status(200).json({ message: "Logged in successfully", token });
   } catch (error) {
     console.error("Login error:", error);
@@ -35,18 +39,25 @@ export const login = async (req: Request, res: Response) => {
 };
 
 // register (only for admin)
-// export const register = async (req: Request, res: Response): Promise<void> => {
-//   try {
-//     const hashedPassword = await bcrypt.hash("admin@123", 10);
-//     const adminObj = {
-//       username: "admin",
-//       email: "admin@email.com",
-//       password: hashedPassword,
-//     };
-//     const newAdmin = new User(adminObj);
-//     const savedUser = await newAdmin.save();
-//     res.status(200).json({ message: "admin saved successfully", savedUser });
-//   } catch (error) {
-//     res.status(500).json({ message: "internal server error" });
-//   }
-// };
+export const register = async (req: Request, res: Response) => {
+  try {
+    const { username, email, password, role } = req.body;
+    if (!username || !email || !password || !role) {
+      res
+        .status(404)
+        .json({ message: "user credentials missing, cannot login" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const adminObj = {
+      username,
+      email,
+      password: hashedPassword,
+      role,
+    };
+    const newAdmin = new User(adminObj);
+    const savedUser = await newAdmin.save();
+    res.status(200).json({ message: "admin saved successfully", savedUser });
+  } catch (error) {
+    res.status(500).json({ message: "internal server error" });
+  }
+};

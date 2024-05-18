@@ -1,11 +1,10 @@
-import { createFaculty } from "./controllers/users";
 import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth";
-import userRoutes from "./routes/users";
+import facultyRoutes from "./routes/faculty";
 dotenv.config();
 
 const app = express();
@@ -31,4 +30,4 @@ mongoose
 // routes
 
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/faculty", facultyRoutes);

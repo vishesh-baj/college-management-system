@@ -1,12 +1,6 @@
 import { nanoid } from "nanoid";
 import { PATHS } from "./paths";
-import {
-  DashboardHomePage,
-  ErrorPage,
-  LandingPage,
-  LoginPage,
-  RegisterPage,
-} from "../pages";
+import { DashboardHomePage, ErrorPage, LandingPage, LoginPage } from "../pages";
 
 export const globalRoutes = [
   {
@@ -26,11 +20,6 @@ export const publicRoutes = [
     key: nanoid(),
     path: PATHS.loginPage,
     Element: LoginPage,
-  },
-  {
-    key: nanoid(),
-    path: PATHS.registerPage,
-    Element: RegisterPage,
   },
 ];
 
