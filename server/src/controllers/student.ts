@@ -4,7 +4,7 @@ import { User } from "../models/user";
 import { v4 as uuidv4 } from "uuid";
 import { IUser } from "../types";
 
-export const createFaculty = async (req: Request, res: Response) => {
+export const createStudent = async (req: Request, res: Response) => {
   try {
     const { email, firstName, lastName } = req.body;
     const username = `${firstName.toLowerCase()}${lastName.toLowerCase()}${
@@ -13,17 +13,11 @@ export const createFaculty = async (req: Request, res: Response) => {
     const password = uuidv4().split("-").slice(-1)[0];
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const facultyToBeSaved = new User({
-      username,
-      email,
-      password: hashedPassword,
-      role: "faculty",
-    });
-    const savedFaculty = await facultyToBeSaved.save();
-
+    const newStudent = new User({ email, username, password: hashedPassword });
+    const savedStudent = await newStudent.save();
     res.status(200).json({
-      message: "Faculty created successfully",
-      savedFaculty,
+      message: "student created successfully",
+      savedStudent,
       loginDetails: {
         username,
         password,
@@ -35,62 +29,61 @@ export const createFaculty = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllFaculty = async (req: Request, res: Response) => {
+export const getAllStudents = async (req: Request, res: Response) => {
   try {
-    const faculties = await User.find({ role: "faculty" });
+    const students = await User.find({ role: "student" });
     res
       .status(200)
-      .json({ message: "Faculties fetched successfully", faculties });
+      .json({ message: "students fetched successfully", students });
   } catch (error) {
-    console.log("Error occured", error);
+    console.error("Error occurred", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
 
-export const getFacultyById = async (req: Request, res: Response) => {
+export const getStudentById = async (req: Request, res: Response) => {
   try {
-    const facultyId = req.params.id;
-    if (!facultyId) {
-      return res.status(404).json({ message: "faculty id not provided" });
+    const studentId = req.params.id;
+    if (!studentId) {
+      return res.status(404).json({ message: "student id not provided" });
     }
-    const faculty = await User.findById(facultyId);
-    if (!faculty) {
+    const student = await User.findById(studentId);
+    if (!student) {
       return res
         .status(404)
-        .json({ message: "faculty not found with the provided id" });
+        .json({ message: "student not found with the provided id" });
     }
-    res.status(200).json({ message: "faculty found", faculty });
+    res.status(200).json({ message: "student found", student });
   } catch (error) {
-    console.log("Error occured", error);
+    console.error("Error occurred", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
 
-export const deleteFaculty = async (req: Request, res: Response) => {
+export const deleteStudent = async (req: Request, res: Response) => {
   try {
-    const facultyId = req.params.id;
-    if (!facultyId) {
-      return res.status(404).json({ message: "faculty id not provided" });
+    const studentId = req.params.id;
+    if (!studentId) {
+      return res.status(404).json({ message: "student id not provided" });
     }
-    const deletedFaculty = await User.findByIdAndDelete(facultyId);
-    if (!deleteFaculty) {
-      return res.status(404).json({ message: "faculty not deleted" });
+    const deletedStudent = await User.findByIdAndDelete(studentId);
+    if (!deleteStudent) {
+      return res.status(404).json({ message: "student not deleted" });
     }
     res
       .status(200)
-      .json({ message: "faculty deleted successfully", deletedFaculty });
+      .json({ message: "student deleted successfully", deletedStudent });
   } catch (error) {
-    console.log("Error occured", error);
+    console.error("Error occurred", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
 
-export const updateFaculty = async (req: Request, res: Response) => {
+export const updateStudent = async (req: Request, res: Response) => {
   try {
-    const facultyId = req.params.id;
+    const studentId = req.params.id;
     const updatedData: Partial<IUser> = req.body;
-
-    if (!facultyId) {
+    if (!studentId) {
       return res.status(404).json({ message: "Faculty ID not provided" });
     }
 
@@ -111,19 +104,17 @@ export const updateFaculty = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid updates!" });
     }
 
-    const updatedFaculty = await User.findByIdAndUpdate(
-      facultyId,
+    const updatedStudent = await User.findByIdAndUpdate(
+      studentId,
       updatedData,
       { new: true }
     );
-
-    if (!updatedFaculty) {
-      return res.status(404).json({ message: "Cannot update faculty" });
+    if (!updatedStudent) {
+      return res.status(404).json({ message: "Can not update student" });
     }
-
     res
       .status(200)
-      .json({ message: "Faculty updated successfully", updatedFaculty });
+      .json({ message: "Student updated successfully", updatedStudent });
   } catch (error) {
     console.error("Error occurred", error);
     res.status(500).json({ message: "Internal Server Error", error });
