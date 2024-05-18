@@ -2,10 +2,18 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { useDispatch } from "react-redux";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { toggleSidebar } from "../features/appState/appStateSlice";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../routes/paths";
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleSidebarToggle = () => {
     dispatch(toggleSidebar());
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate(PATHS.landingPage);
   };
 
   return (
@@ -16,7 +24,7 @@ const Navbar = () => {
       >
         <RxHamburgerMenu />
       </button>
-      <button className="btn btn-ghost btn-square">
+      <button onClick={handleLogout} className="btn btn-ghost btn-square">
         <RiLogoutCircleRLine />
       </button>
     </div>
