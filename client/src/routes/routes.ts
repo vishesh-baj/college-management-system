@@ -1,6 +1,17 @@
 import { nanoid } from "nanoid";
 import { PATHS } from "./paths";
-import { DashboardHomePage, ErrorPage, LandingPage, LoginPage } from "../pages";
+import {
+  CreateFacultyPage,
+  CreateStudentPage,
+  DashboardHomePage,
+  EditFacultyPage,
+  EditStudentPage,
+  ErrorPage,
+  FacultyDashboardPage,
+  LandingPage,
+  LoginPage,
+  StudentDashboardPage,
+} from "../pages";
 
 export const globalRoutes = [
   {
@@ -28,5 +39,35 @@ export const privateRoutes = [
     key: nanoid(),
     path: PATHS.dashboardHomePage,
     Element: DashboardHomePage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.facultyDashboardPage,
+    Element: FacultyDashboardPage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.createFacultyPage,
+    Element: CreateFacultyPage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.editFacultyPage,
+    Element: EditFacultyPage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.studentDashboardPage,
+    Element: StudentDashboardPage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.createStudentPage,
+    Element: CreateStudentPage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.editStudentPage,
+    Element: EditStudentPage,
   },
 ];
