@@ -13,7 +13,12 @@ export const createStudent = async (req: Request, res: Response) => {
     const password = uuidv4().split("-").slice(-1)[0];
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newStudent = new User({ email, username, password: hashedPassword });
+    const newStudent = new User({
+      email,
+      username,
+      password: hashedPassword,
+      role: "student",
+    });
     const savedStudent = await newStudent.save();
     res.status(200).json({
       message: "student created successfully",
@@ -29,14 +34,14 @@ export const createStudent = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllStudents = async (req: Request, res: Response) => {
+export const getAllStudent = async (req: Request, res: Response) => {
   try {
     const students = await User.find({ role: "student" });
     res
       .status(200)
-      .json({ message: "students fetched successfully", students });
+      .json({ message: "Students fetched successfully", students });
   } catch (error) {
-    console.error("Error occurred", error);
+    console.log("Error occured", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
@@ -83,6 +88,7 @@ export const updateStudent = async (req: Request, res: Response) => {
   try {
     const studentId = req.params.id;
     const updatedData: Partial<IUser> = req.body;
+
     if (!studentId) {
       return res.status(404).json({ message: "Faculty ID not provided" });
     }
@@ -104,17 +110,19 @@ export const updateStudent = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid updates!" });
     }
 
-    const updatedStudent = await User.findByIdAndUpdate(
+    const updatedFaculty = await User.findByIdAndUpdate(
       studentId,
       updatedData,
       { new: true }
     );
-    if (!updatedStudent) {
-      return res.status(404).json({ message: "Can not update student" });
+
+    if (!updatedFaculty) {
+      return res.status(404).json({ message: "Cannot update student" });
     }
+
     res
       .status(200)
-      .json({ message: "Student updated successfully", updatedStudent });
+      .json({ message: "Faculty updated successfully", updatedFaculty });
   } catch (error) {
     console.error("Error occurred", error);
     res.status(500).json({ message: "Internal Server Error", error });
