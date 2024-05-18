@@ -1,8 +1,10 @@
 import { FC } from "react";
 import { IReactChildren } from "../types";
-import { MobileSidebar, Navbar, Sidebar } from "../components";
+import { Header, MobileSidebar, Navbar, Sidebar } from "../components";
+import { useLocation } from "react-router-dom";
 
 const DashboardLayout: FC<IReactChildren> = ({ children }) => {
+  const location = useLocation();
   return (
     <div>
       <MobileSidebar />
@@ -10,7 +12,17 @@ const DashboardLayout: FC<IReactChildren> = ({ children }) => {
         <Sidebar />
         <div className="flex flex-col flex-1 ">
           <Navbar />
-          {children}
+          <div className="p-4">
+            <Header
+              title={location.pathname
+                .split("/")
+                [location.pathname.split("/").length - 1].split("-")
+                .join(" ")
+                .toUpperCase()}
+            />
+
+            {children}
+          </div>
         </div>
       </div>
     </div>

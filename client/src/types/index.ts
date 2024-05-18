@@ -18,3 +18,7 @@ export interface IAppState {
   theme: string;
   sidebarToggle: boolean;
 }
+
+export interface IHeader {
+  title: string;
+}

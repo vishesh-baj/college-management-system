@@ -1,7 +1,5 @@
-import { MobileSidebar } from "../../components";
-
 const DashboardHomePage = () => {
-  return <div>Dashboard Home Page</div>;
+  return <div></div>;
 };
 
 export default DashboardHomePage;
