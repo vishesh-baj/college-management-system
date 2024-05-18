@@ -8,5 +8,5 @@ export const PrivateRoutes = () => {
 
 export const AuthRoutes = () => {
   const auth: boolean = localStorage.getItem("token") !== null;
-  return auth ? <Outlet /> : <Navigate to={PATHS.dashboardHomePage} />;
+  return auth ? <Navigate to={PATHS.dashboardHomePage} /> : <Outlet />;
 };
