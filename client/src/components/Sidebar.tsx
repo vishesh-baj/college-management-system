@@ -20,12 +20,12 @@ const Sidebar = () => {
         </div>
         {/* sidebar menu */}
         <ul className="menu bg-base-200 rounded-box">
-          {sidebarMapping.map(({ id, title, link, Icon, children }) => {
-            return children ? (
-              <li className="mt-2" key={id}>
-                {sidebarState ? (
+          {sidebarMapping.map(({ id, title, link, Icon, children }) => (
+            <li className="mt-2" key={id}>
+              {children ? (
+                sidebarState ? (
                   <details open>
-                    <summary>
+                    <summary className="flex items-center">
                       <Icon className="text-xl" />
                       {title}
                     </summary>
@@ -43,7 +43,7 @@ const Sidebar = () => {
                     </ul>
                   </details>
                 ) : (
-                  <li className={`dropdown dropdown-right m-0 p-0 mt-2`}>
+                  <div className="dropdown dropdown-right mt-2">
                     <a
                       tabIndex={0}
                       className="hover:bg-transparent focus:bg-transparent"
@@ -60,11 +60,9 @@ const Sidebar = () => {
                         </li>
                       ))}
                     </ul>
-                  </li>
-                )}
-              </li>
-            ) : (
-              <li className="mt-2" key={id}>
+                  </div>
+                )
+              ) : (
                 <NavLink
                   className={`flex ${sidebarState ? "" : "justify-center"}`}
                   to={link}
@@ -76,9 +74,9 @@ const Sidebar = () => {
                     </span>
                   )}
                 </NavLink>
-              </li>
-            );
-          })}
+              )}
+            </li>
+          ))}
         </ul>
       </aside>
     </div>
