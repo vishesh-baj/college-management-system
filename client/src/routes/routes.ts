@@ -39,35 +39,42 @@ export const privateRoutes = [
     key: nanoid(),
     path: PATHS.dashboardHomePage,
     Element: DashboardHomePage,
+    access: ["admin"],
   },
   {
     key: nanoid(),
     path: PATHS.facultyDashboardPage,
     Element: FacultyDashboardPage,
+    access: ["admin"],
   },
   {
     key: nanoid(),
     path: PATHS.createFacultyPage,
     Element: CreateFacultyPage,
+    access: ["admin"],
   },
   {
     key: nanoid(),
     path: PATHS.editFacultyPage,
     Element: EditFacultyPage,
+    access: ["admin"],
   },
   {
     key: nanoid(),
     path: PATHS.studentDashboardPage,
     Element: StudentDashboardPage,
+    access: ["admin", "faculty"],
   },
   {
     key: nanoid(),
     path: PATHS.createStudentPage,
     Element: CreateStudentPage,
+    access: ["admin", "faculty"],
   },
   {
     key: nanoid(),
     path: PATHS.editStudentPage,
     Element: EditStudentPage,
+    access: ["admin", "faculty"],
   },
 ];

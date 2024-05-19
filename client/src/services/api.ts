@@ -4,7 +4,7 @@ import { ILogin } from "../types";
 const BASE_URL = "http://localhost:8081/api/";
 
 // function to get token from local storage
-const getTokenFromLocalStorage = () => {
+export const getTokenFromLocalStorage = () => {
   return localStorage.getItem("token");
 };
 

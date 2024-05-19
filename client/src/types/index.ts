@@ -22,3 +22,11 @@ export interface IAppState {
 export interface IHeader {
   title: string;
 }
+
+export interface IDecodedTokenObject {
+  userId: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
+ 
